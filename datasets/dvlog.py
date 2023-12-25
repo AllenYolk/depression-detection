@@ -35,12 +35,14 @@ class DVlog(data.Dataset):
                     # concat visual and acoustic features along the 2nd axis
                     T_v, T_a = v_feature.shape[0], a_feature.shape[0]
                     if T_v == T_a:
-                        feature = np.concatenate((v_feature, a_feature), axis=1)
+                        feature = np.concatenate(
+                            (v_feature, a_feature), axis=1
+                        ).astype(np.float32)
                     else:
                         T = min(T_v, T_a)
                         feature = np.concatenate(
                             (v_feature[:T], a_feature[:T]), axis=1
-                        )
+                        ).astype(np.float32)
                     self.features.append(feature)
 
     def is_sample(self, sample) -> bool:
@@ -106,19 +108,19 @@ if __name__ == '__main__':
     train_loader = get_dvlog_dataloader(
         "../dvlog-dataset", "train"
     )
-    print(f"train_loader: {len(train_loader)} samples")
+    print(f"train_loader: {len(train_loader.dataset)} samples")
     valid_loader = get_dvlog_dataloader(
         "../dvlog-dataset", "valid"
     )
-    print(f"valid_loader: {len(valid_loader)} samples")
+    print(f"valid_loader: {len(valid_loader.dataset)} samples")
     test_loader = get_dvlog_dataloader(
         "../dvlog-dataset", "test"
     )
-    print(f"test_loader: {len(test_loader)} samples")
+    print(f"test_loader: {len(test_loader.dataset)} samples")
 
     b1 = next(iter(train_loader))[0]
-    print(f"A train_loader batch: shape={b1.shape}")
+    print(f"A train_loader batch: shape={b1.shape}, dtype={b1.dtype}")
     b2 = next(iter(valid_loader))[0]
-    print(f"A valid_loader batch: shape={b2.shape}")
+    print(f"A valid_loader batch: shape={b2.shape}, dtype={b2.dtype}")
     b3 = next(iter(test_loader))[0]
-    print(f"A test_loader batch: shape={b3.shape}")
+    print(f"A test_loader batch: shape={b3.shape}, dtype={b3.dtype}")
