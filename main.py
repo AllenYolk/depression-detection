@@ -217,7 +217,9 @@ def main():
     wandb.log_artifact(artifact)
 
     # load the best model for testing
-    net.load_state_dict(torch.load(f"{wandb.run.dir}/best_model.pt"))
+    net.load_state_dict(
+        torch.load(f"{wandb.run.dir}/best_model.pt", map_location=args.device[0])
+    )
     test_results = val(net, test_loader, loss_fn, "cpu")
     print("Test results:")
     print(test_results)
