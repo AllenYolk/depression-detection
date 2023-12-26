@@ -161,7 +161,7 @@ def main():
     if args.model == "TMeanNet":
         net = TMeanNet(hidden_sizes=[512, 512, 512])
     elif args.model == "DepressionDetector":
-        net = DepressionDetector(d=256, l=3)
+        net = DepressionDetector(d=256, l=6, t_downsample=4)
     net = net.to(args.device[0])
     if len(args.device) > 1:
         net = torch.nn.DataParallel(net, device_ids=args.device)

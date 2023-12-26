@@ -6,10 +6,10 @@ from .base import BaseNet
 
 class DepressionDetector(BaseNet):
 
-    def __init__(self, d=256, l=3):
+    def __init__(self, d=256, l=6, t_downsample=4):
         super().__init__()
         self.v_downsample = nn.Sequential(
-            nn.Conv1d(136, d, kernel_size=16, stride=8, padding=8),
+            nn.Conv1d(136, d, kernel_size=16, stride=t_downsample, padding=8),
             nn.BatchNorm1d(d),
         )
         self.v_encoder = nn.TransformerEncoder(
@@ -19,7 +19,7 @@ class DepressionDetector(BaseNet):
             num_layers=l, 
         )
         self.a_downsample = nn.Sequential(
-            nn.Conv1d(25, d, kernel_size=16, stride=8, padding=8),
+            nn.Conv1d(25, d, kernel_size=16, stride=t_downsample, padding=8),
             nn.BatchNorm1d(d),
         )
         self.a_encoder = nn.TransformerEncoder(
