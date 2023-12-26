@@ -4,7 +4,7 @@ test_gender: both
 
 model: DepressionDetector
 
-epochs: 250
+epochs: 300
 batch_size: 8
 learning_rate: 1e-4
 lr_scheduler: cos
