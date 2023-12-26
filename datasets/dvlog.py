@@ -10,7 +10,7 @@ import numpy as np
 class DVlog(data.Dataset):
     def __init__(
         self, root: Union[str, Path], fold: str="train", 
-        gender: Optional[str]=None, transform=None, target_transform=None
+        gender: str="both", transform=None, target_transform=None
     ):
         self.root = root if isinstance(root, Path) else Path(root)
         self.fold = fold
@@ -47,7 +47,7 @@ class DVlog(data.Dataset):
 
     def is_sample(self, sample) -> bool:
         gender, fold = sample[3], sample[4]
-        if self.gender is None:
+        if self.gender == "both":
             return fold == self.fold
         return (fold == self.fold) and (gender == self.gender)
 
@@ -77,7 +77,7 @@ def _collate_fn(batch):
 
 def get_dvlog_dataloader(
     root: Union[str, Path], fold: str="train", batch_size: int=8, 
-    gender: Optional[str]=None,
+    gender: str="both",
     transform=None, target_transform=None, 
 ):
     """Get dataloader for DVlog dataset.
@@ -87,8 +87,7 @@ def get_dvlog_dataloader(
             like `*/dvlog-dataset`.
         fold (str, optional): train / valid / test. Defaults to "train".
         batch_size (int, optional): Defaults to 8.
-        gender (Optional[str], optional): m / f / None. Defaults to None, which 
-            means both genders are included.
+        gender (str, optional): m / f / both. Defaults to both.
         transform (optional): Defaults to None.
         target_transform (optional): Defaults to None.
 

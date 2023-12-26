@@ -1,0 +1,12 @@
+data_dir: "../dvlog-dataset"
+train_gender: both
+test_gender: both
+
+model: TMeanNet
+
+epochs: 250
+batch_size: 8
+learning_rate: 1e-4
+lr_scheduler: cos
+device:
+  - "cpu"
