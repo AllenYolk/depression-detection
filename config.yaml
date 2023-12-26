@@ -2,7 +2,7 @@ data_dir: "../dvlog-dataset"
 train_gender: both
 test_gender: both
 
-model: TMeanNet
+model: DepressionDetector
 
 epochs: 250
 batch_size: 8

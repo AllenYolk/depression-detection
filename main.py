@@ -5,7 +5,7 @@ import wandb
 import torch
 from tqdm import tqdm
 
-from models import TMeanNet
+from models import TMeanNet, DepressionDetector
 from datasets import get_dvlog_dataloader
 
 
@@ -160,6 +160,8 @@ def main():
     # construct the model
     if args.model == "TMeanNet":
         net = TMeanNet(hidden_sizes=[512, 512, 512])
+    elif args.model == "DepressionDetector":
+        net = DepressionDetector(d=256, l=3)
     net = net.to(args.device[0])
     if len(args.device) > 1:
         net = torch.nn.DataParallel(net, device_ids=args.device)
