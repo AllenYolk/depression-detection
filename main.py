@@ -25,7 +25,7 @@ def parse_args():
     parser.add_argument("--test_gender", type=str)
     parser.add_argument(
         "-m", "--model", type=str,
-        choices=["TMeanNet",]
+        choices=["TMeanNet", "DepressionDetector",]
     )
     parser.add_argument("-e", "--epochs", type=int)
     parser.add_argument("-bs", "--batch_size", type=int)
