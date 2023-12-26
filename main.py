@@ -5,7 +5,7 @@ import wandb
 import torch
 from tqdm import tqdm
 
-from models import TMeanNet, DepressionDetector
+from models import TMeanNet, DepressionDetector, TAMFN
 from datasets import get_dvlog_dataloader
 
 
@@ -25,7 +25,7 @@ def parse_args():
     parser.add_argument("--test_gender", type=str)
     parser.add_argument(
         "-m", "--model", type=str,
-        choices=["TMeanNet", "DepressionDetector",]
+        choices=["TMeanNet", "DepressionDetector", "TAMFN"]
     )
     parser.add_argument("-e", "--epochs", type=int)
     parser.add_argument("-bs", "--batch_size", type=int)
@@ -162,6 +162,8 @@ def main():
         net = TMeanNet(hidden_sizes=[512, 512, 512])
     elif args.model == "DepressionDetector":
         net = DepressionDetector(d=256, l=6, t_downsample=4)
+    elif args.model == "TAMFN":
+        net = TAMFN(d=256, l=6, t_downsample=4)
     net = net.to(args.device[0])
     if len(args.device) > 1:
         net = torch.nn.DataParallel(net, device_ids=args.device)
